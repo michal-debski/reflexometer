@@ -15,16 +15,19 @@
     <div>
         <p id="title">Reflexometer Game!</p>
     </div>
-    <div id="buttons">
-
-        <input id="start-btn" type="button" onclick="startGame()" value="Start!"/>
-        <input id="stop-btn" type="button" onclick="stopGame()" value="Stop!"/>
-    </div>
     <div>
         <br>
         <label for="max-trials">Max Trials: </label>
         <input id="max-trials" type="number" min="1" value="5" />
+    </div>
+    <div>
+        <br>
         <input id="submit-btn" type="button" onclick="confirmMaxTrials()" value="Submit" />
+    </div>
+    <br>
+    <div id="buttons">
+        <input id="start-btn" type="button" onclick="startGame()" value="Start!"/>
+        <input id="stop-btn" type="button" onclick="stopGame()" value="Stop!"/>
     </div>
     <div id="table">
         <h3>Your Results:</h3>

@@ -1,0 +1,31 @@
+
+html, body {
+    height: 100%;
+    margin: 0;
+    background: lightgrey;
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+}
+
+#start-mouse-btn {
+    background-color: cadetblue;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 40px;
+}
