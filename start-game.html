@@ -4,30 +4,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Reflexometer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@1,100..700&display=swap"
+          rel="stylesheet">
+    <script src="script.js"></script>
 </head>
 <body>
 <nav>
-    <input id="start-btn" type="button" onclick="location.href='start-game.html';" value="Start!"/>
-    <input id="stop-btn" type="button" onclick="stopTest()" value="Stop!"/>
-    <h3>Your Results:</h3>
-    <table>
-        <thead>
-        <tr>
-            <th>Best time [ms]</th>
-            <th>Worst time [ms]</th>
-            <th>Average time [ms]</th>
-            <th>Trials </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td id="best-time"></td>
-            <td id="worst-time"></td>
-            <td id="avg-time"></td>
-            <td id="trials"></td>
-        </tr>
-        </tbody>
-    </table>
+    <div>
+        <p id="title">Reflexometer Game!</p>
+    </div>
+    <div id="buttons">
+
+        <input id="start-btn" type="button" onclick="startGame()" value="Start!"/>
+        <input id="stop-btn" type="button" onclick="stopGame()" value="Stop!"/>
+    </div>
+    <div>
+        <br>
+        <label for="max-trials">Max Trials: </label>
+        <input id="max-trials" type="number" min="1" value="5" />
+        <input id="submit-btn" type="button" onclick="confirmMaxTrials()" value="Submit" />
+    </div>
+    <div id="table">
+        <h3>Your Results:</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Shortest attempt [ms]</th>
+                <th>Longest attempt [ms]</th>
+                <th>Average attempt [ms]</th>
+                <th>Best attempt [ms]</th>
+                <th>Attempts</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td id="shortest-time"></td>
+                <td id="worst-time"></td>
+                <td id="avg-time"></td>
+                <td id="best-time"></td>
+                <td id="trials"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </nav>
 <div id="start-div">
     <input id="clicker" type="button" onclick="handleClick()" value="Click me as fast as you can!"/>
@@ -43,84 +64,4 @@
     <h3>© 2025 Michał Dębski</h3>
 </footer>
 </body>
-<script>
-
-    startTest();
-
-    let startTime = null;
-    let reactionTimes = [];
-    let trials = 0;
-    let maxTrials = 5;
-    let popup = document.getElementById("popup");
-    let isGameActive = true;
-
-    function stopTest() {
-
-        isGameActive = false;
-        showResults();
-        if(trials === 0) {
-            popup.classList.add("open-popup");
-        }
-
-    }
-
-    function startTest() {
-
-        document.getElementById("clicker").disabled = true;
-        document.getElementById("clicker").value = "Wait for new color";
-
-        const delay = Math.floor(Math.random() * 200) + 300;
-
-        setTimeout(() => {
-            document.getElementById("clicker").style.backgroundColor = getRandomColor();
-            document.getElementById("clicker").value = "Click !"
-            document.getElementById("clicker").disabled = false;
-            startTime = Date.now();
-        }, delay);
-    }
-
-    function handleClick() {
-
-        if (isGameActive) {
-            if (startTime) {
-                let reactionTime = Date.now() - startTime;
-                reactionTimes.push(reactionTime);
-                trials++;
-                if (trials < maxTrials) {
-                    startTest();
-                } else {
-                    showResults();
-                }
-                startTime = null;
-            }
-        } else {
-            alert("You need to restart a game!");
-        }
-
-    }
-
-    function showResults() {
-        if (trials !== 0){
-            let bestTime = Math.min(...reactionTimes);
-            let worstTime = Math.max(...reactionTimes);
-            let avgTime = reactionTimes.reduce((a, b) => a + b, 1) / reactionTimes.length;
-
-            document.getElementById("best-time").innerText = bestTime;
-            document.getElementById("worst-time").innerText = worstTime;
-            document.getElementById("avg-time").innerText = avgTime;
-            document.getElementById("trials").innerText = trials;
-        }
-
-    }
-
-    function getRandomColor() {
-        return '#' + Math.floor(Math.random() * 16777215).toString(16);
-    }
-
-
-    function closePopup() {
-        const popup = document.getElementById("popup");
-        popup.classList.remove("open-popup")
-    }
-</script>
 </html>
